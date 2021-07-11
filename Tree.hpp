@@ -15,11 +15,15 @@ class Tree {
 public:
 	Tree();
 	~Tree();
-	Branch*	createElement(int newdata);
-	void 	addElement(int newdata);
+	void 	insertElement(int newdata);
+
 private:
 	Branch*	_branch;
 
+	//-----internal mechanic for insertElement()------
+	Branch*	_createElement(int newdata);
+	void 	_addElement(int newdata, Branch*& aBranch);
+	//-------------------------------------------------
 };
 
 

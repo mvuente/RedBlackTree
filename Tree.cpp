@@ -9,7 +9,12 @@ Tree::Tree()
 Tree::~Tree()
 {}
 
-Branch*	Tree::createElement(int newdata)
+void 	Tree::insertElement(int newdata)
+{
+	_addElement(newdata, _branch);
+}
+
+Branch*	Tree::_createElement(int newdata)
 {
 	Branch*	newbranch = new Branch;
 	newbranch->data = newdata;
@@ -19,15 +24,16 @@ Branch*	Tree::createElement(int newdata)
 	return newbranch;
 }
 
-void 	Tree::addElement(int newdata)
+void 	Tree::_addElement(int newdata, Branch*& aBranch)
 {
-	if (!_branch)
+	if (!aBranch)
 	{
-
-		_branch = createElement(newdata);
-		std::cout << _branch->data << std::endl;
-
+		aBranch = _createElement(newdata);
+		std::cout << aBranch->data << std::endl; //just for check
 	}
+	else if (aBranch->data == newdata)
+		std::cout << "value for the key will be renovated" << std::endl;
 	else
-		std::cout << "WRONG" << std::endl;
+		return;
+
 }
