@@ -33,7 +33,16 @@ void 	Tree::_addElement(int newdata, Branch*& aBranch)
 	}
 	else if (aBranch->data == newdata)
 		std::cout << "value for the key will be renovated" << std::endl;
+	else if (aBranch->data > newdata)
+	{
+		std::cout << "MAKING LEFT BRANCH" << std::endl;
+		_addElement(newdata, aBranch->left);
+	}
 	else
-		return;
+	{
+		std::cout << "MAKING RIGHT BRANCH" << std::endl;
+		_addElement(newdata, aBranch->right);
+	}
+
 
 }
