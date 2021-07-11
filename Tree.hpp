@@ -15,7 +15,8 @@ class Tree {
 public:
 	Tree();
 	~Tree();
-	void addElement(int newdata);
+	Branch*	createElement(int newdata);
+	void 	addElement(int newdata);
 private:
 	Branch*	_branch;
 
