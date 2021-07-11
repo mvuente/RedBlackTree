@@ -23,6 +23,7 @@ private:
 	//-----internal mechanic for insertElement()------
 	Branch*	_createElement(int newdata);
 	void 	_addElement(int newdata, Branch*& aBranch);
+	void	_balancer(Branch*& aBranch);
 	//-------------------------------------------------
 };
 

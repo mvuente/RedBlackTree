@@ -30,6 +30,7 @@ void 	Tree::_addElement(int newdata, Branch*& aBranch)
 	{
 		aBranch = _createElement(newdata);
 		std::cout << aBranch->data << std::endl; //just for check
+		_balancer(aBranch);
 	}
 	else if (aBranch->data == newdata)
 		std::cout << "value for the key will be renovated" << std::endl;
@@ -44,5 +45,10 @@ void 	Tree::_addElement(int newdata, Branch*& aBranch)
 		_addElement(newdata, aBranch->right);
 	}
 
+
+}
+
+void	Tree::_balancer(Branch*& aBranch)
+{
 
 }
