@@ -1,0 +1,1 @@
+Balancing was made in accordance with manual https://habr.com/ru/company/otus/blog/472040/

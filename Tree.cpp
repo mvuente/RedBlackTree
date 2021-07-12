@@ -20,7 +20,7 @@ void 	Tree::_addElement(int newdata, Branch*& aBranch, Branch* father)
 	{
 		aBranch = _createElement(newdata, father);
 		std::cout << aBranch->data << " red is " << aBranch->isRed << std::endl; //just for check
-		//_balancer(aBranch);
+		_balancer(aBranch);
 	}
 	else if (aBranch->data == newdata)
 		std::cout << "value for the key will be renovated" << std::endl;
@@ -53,7 +53,12 @@ Branch*	Tree::_createElement(int newdata, Branch*& father)
 
 
 
-//void	Tree::_balancer(Branch*& aBranch)
-//{
-//
-//}
+void	Tree::_balancer(Branch*& aBranch)
+{
+	if () //condition for red Uncle
+		redUncle();
+	else if () //condition for black uncle and farther and grandfather are on different sides
+		blackUncleFatherGrandDiff();
+	else //condition for black uncle and farther and grandfather are on the same side
+		blackUnclefatherGrandsame();
+}

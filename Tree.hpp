@@ -23,9 +23,14 @@ private:
 
 	//-----internal mechanic for insertElement()------
 	Branch*	_createElement(int newdata, Branch*& father);
-	void 	_addElement(int newdata, Branch*& aBranch, Branch* father);
+	void 	_addElement(int newdata, Branch*& aBranch, Branch* father); // 3-rd argument isn't a referense, because I need to use nullptr!
 	void	_balancer(Branch*& aBranch);
-	//-------------------------------------------------
+			//-----internal mechanic for balancer()------
+	void	_redUncle(Branch*& aBranch);
+	void	_blackUncleFatherGrandDiff(Branch*& aBranch);
+	void	_blackUnclefatherGrandsame(Branch*& aBranch);
+			//-----end of balancer mechanic------------------
+	//-----end of inserting mechanic------------------
 };
 
 
