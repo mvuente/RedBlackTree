@@ -9,6 +9,7 @@ typedef struct branch
 	bool 			isRed;
 	struct branch	*left;
 	struct branch	*right;
+	struct branch	*father;
 } Branch;
 
 class Tree {
@@ -21,8 +22,8 @@ private:
 	Branch*	_branch;
 
 	//-----internal mechanic for insertElement()------
-	Branch*	_createElement(int newdata);
-	void 	_addElement(int newdata, Branch*& aBranch);
+	Branch*	_createElement(int newdata, Branch*& father);
+	void 	_addElement(int newdata, Branch*& aBranch, Branch* father);
 	void	_balancer(Branch*& aBranch);
 	//-------------------------------------------------
 };
