@@ -63,11 +63,11 @@ void	Tree::_balancer(Branch*& aBranch)
 			uncle = grand->right;
 		//family has been determined
 		if (uncle && uncle->isRed) //condition for red Uncle
-			redUncle(aBranch->father, uncle);
-		else if () //condition for black uncle and farther and grandfather are on different sides
-			blackUncleFatherGrandDiff();
-		else //condition for black uncle and farther and grandfather are on the same side
-			blackUnclefatherGrandsame();
+			_redUncle(aBranch->father, uncle);
+		//else if () //condition for black uncle and farther and grandfather are on different sides
+		//	_blackUncleFatherGrandDiff();
+		//else //condition for black uncle and farther and grandfather are on the same side
+		//	_blackUnclefatherGrandsame();
 	}
 	else
 		aBranch->isRed = false; // I'm not sure
@@ -81,3 +81,13 @@ void	Tree::_redUncle(Branch*& father, Branch* uncle)
 	father->father->isRed = true;
 	_balancer(father->father); // to check, if it isn't a root
 }
+
+// --- for debug-----------
+
+Branch*	Tree::getTree() const
+{
+	return _branch;
+}
+
+
+//---- end of fro debug----

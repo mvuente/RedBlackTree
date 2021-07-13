@@ -18,6 +18,10 @@ public:
 	~Tree();
 	void 	insertElement(int newdata);
 
+	//----debug functions ---------
+	Branch*	getTree() const;
+	//----end of debug functions---
+
 private:
 	Branch*	_branch;
 
