@@ -64,8 +64,8 @@ void	Tree::_balancer(Branch*& aBranch)
 		//family has been determined
 		if (uncle && uncle->isRed) //condition for red Uncle
 			_redUncle(aBranch->father, uncle);
-		//else if () //condition for black uncle and farther and grandfather are on different sides
-		//	_blackUncleFatherGrandDiff();
+		else if (uncle && !uncle->isRed && !_isFatherandGrandontheSameSide(aBranch)) //condition for black uncle and farther and grandfather are on different sides
+			_blackUncleFatherGrandDifSides(aBranch);
 		//else //condition for black uncle and farther and grandfather are on the same side
 		//	_blackUnclefatherGrandsame();
 	}
@@ -80,6 +80,25 @@ void	Tree::_redUncle(Branch*& father, Branch* uncle)
 	uncle->isRed = false;
 	father->father->isRed = true;
 	_balancer(father->father); // to check, if it isn't a root
+}
+
+bool	Tree::_isFatherandGrandontheSameSide(Branch*& aBranch)
+{
+	if (_sideChecker(aBranch->father, aBranch->father->father) == _sideChecker(aBranch, aBranch->father))
+		return true;
+	return false;
+}
+
+std::string Tree::_sideChecker(Branch*& son, Branch*& father)
+{
+	if (father->left == son)
+		return "left";
+	return "right";
+}
+
+void		Tree::_blackUncleFatherGrandDifSides(Branch*& aBranch)
+{
+
 }
 
 // --- for debug-----------
