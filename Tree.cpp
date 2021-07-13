@@ -69,6 +69,8 @@ void	Tree::_balancer(Branch*& aBranch)
 		else //condition for black uncle and farther and grandfather are on the same side
 			blackUnclefatherGrandsame();
 	}
+	else
+		aBranch->isRed = false; // I'm not sure
 
 }
 
