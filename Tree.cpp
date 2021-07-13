@@ -64,13 +64,13 @@ void	Tree::_balancer(Branch*& aBranch)
 		//family has been determined
 		if (uncle && uncle->isRed) //condition for red Uncle
 			_redUncle(aBranch->father, uncle);
-		else if (uncle && !uncle->isRed && !_isFatherandGrandontheSameSide(aBranch)) //condition for black uncle and farther and grandfather are on different sides
-			_blackUncleFatherGrandDifSides(aBranch);
+		else if ((!uncle || (uncle && !uncle->isRed)) && !_isFatherandGrandontheSameSide(aBranch)) //condition for black uncle and farther and grandfather are on different sides
+			_blackUncleFatherGrandDifSides(aBranch, aBranch->father, aBranch->father->father);
 		//else //condition for black uncle and farther and grandfather are on the same side
 		//	_blackUnclefatherGrandsame();
 	}
-	else
-		aBranch->isRed = false; // I'm not sure
+	else if (!aBranch->father)// check further
+		aBranch->isRed = false;
 
 }
 
@@ -96,9 +96,41 @@ std::string Tree::_sideChecker(Branch*& son, Branch*& father)
 	return "right";
 }
 
-void		Tree::_blackUncleFatherGrandDifSides(Branch*& aBranch)
+void		Tree::_blackUncleFatherGrandDifSides(Branch*& son, Branch*& father, Branch*& grand)
 {
+	//1. small rotation
+	_smallRotor(son, father, grand, _sideChecker(son, father));
+	//2. samesides
+}
 
+void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side)
+{
+	std::string newside;
+	if (side == "left")
+		newside = "right";
+	else
+		newside = "left";
+	_sonChanger(grand, son, newside);// should to be rewritten with temporary variables
+	_sonsReplacer(son, father);
+	_sonChanger(son, father, newside);
+
+
+
+}
+
+void		Tree::_sonsReplacer(Branch*& fromWhom, Branch*& toWhom)
+{
+	toWhom->left = fromWhom->left;
+	toWhom->right = fromWhom->right;
+}
+
+void		Tree::_sonChanger(Branch*& older, Branch*& younger, std::string side)
+{
+	if (side == "left")
+		older->left = younger;
+	else
+		older->right = younger;
+	younger->father = older;
 }
 
 // --- for debug-----------

@@ -33,8 +33,11 @@ private:
 	void		_redUncle(Branch*& father, Branch* uncle);
 	bool		_isFatherandGrandontheSameSide(Branch*& aBranch);
 	std::string _sideChecker(Branch*& son, Branch*& father);
-	void		_blackUncleFatherGrandDifSides(Branch*& aBranch);
+	void		_blackUncleFatherGrandDifSides(Branch*& son, Branch*& father, Branch*& grand);
 	void	_blackUnclefatherGrandsame(Branch*& aBranch);
+	void		_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side);
+	void		_sonsReplacer(Branch*& fromWhom, Branch*& toWhom);
+	void		_sonChanger(Branch*& older, Branch*& younger, std::string side);
 			//-----end of balancer mechanic------------------
 	//-----end of inserting mechanic------------------
 };
