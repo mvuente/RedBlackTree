@@ -96,7 +96,7 @@ std::string Tree::_sideChecker(Branch*& son, Branch*& father)
 	return "right";
 }
 
-void		Tree::_blackUncleFatherGrandDifSides(Branch*& son, Branch*& father, Branch*& grand)
+void		Tree::_blackUncleFatherGrandDifSides(Branch*& son, Branch* father, Branch* grand)
 {
 	//1. small rotation
 	_smallRotor(son, father, grand, _sideChecker(son, father));
@@ -111,6 +111,7 @@ void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::stri
 	else
 		newside = "left";
 	_sonChanger(grand, son, newside);// should to be rewritten with temporary variables
+	std::cout << "Son data is " << son->data << " father data is " << father->data << std::endl;
 	_sonsReplacer(son, father);
 	_sonChanger(son, father, newside);
 
