@@ -36,6 +36,7 @@ private:
 	void		_blackUncleFatherGrandDifSides(Branch* son, Branch* father, Branch* grand);
 	void		_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch* grand);
 	void		_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side);
+	void		_rePainting(Branch*& father, Branch*& grand);
 	void		_sonsReplacer(Branch*& fromWhom, Branch*& toWhom);
 	void		_sonChanger(Branch*& older, Branch*& younger, std::string side);
 			//-----end of balancer mechanic------------------

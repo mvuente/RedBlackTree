@@ -105,7 +105,47 @@ void		Tree::_blackUncleFatherGrandDifSides(Branch* son, Branch* father, Branch* 
 
 void		Tree::_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch* grand)
 {
-	std::cout << "son is " << son->data << " father is " << father->data << " grand is " << grand->data << std::endl;
+	std::cout << "son is " << son->data << " father is " << father->data << " grand is " << grand->data << std::endl; //for debug
+	std::string newside = _sideChecker(son, father);
+
+	Branch*	tempRoot = grand->father;
+	std::cout << "tempRoot data is " << grand->father->data << std::endl;
+	Branch*	temp;
+	if (newside == "left")
+	{
+		temp = father->right;
+		father->right = grand;
+		grand->left = temp;
+	}
+	else
+	{
+		temp = father->left;
+		father->left = grand;
+		grand->right = temp;
+	}
+
+	grand->father = father;
+
+
+	_rePainting(father, grand);
+	father->father = tempRoot;
+	if (newside == "left")
+		tempRoot->left = father;
+	else
+		tempRoot->right = father;
+
+//	if (tempRoot == _branch)
+//	{
+//		std::cout << "root data is " << _branch->data << std::endl;
+//		_branch = father->father;
+//	}
+
+}
+
+void		Tree::_rePainting(Branch*& father, Branch*& grand)
+{
+	father->isRed = !father->isRed;
+	grand->isRed = !grand->isRed;
 }
 
 void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side)
@@ -115,7 +155,7 @@ void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::stri
 		newside = "right";
 	else
 		newside = "left";
-	_sonChanger(grand, son, newside);// should to be rewritten with temporary variables
+	_sonChanger(grand, son, newside);
 	_sonsReplacer(son, father);
 	_sonChanger(son, father, newside);
 
