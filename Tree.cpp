@@ -19,22 +19,18 @@ void 	Tree::_addElement(int newdata, Branch*& aBranch, Branch* father)
 	if (!aBranch)
 	{
 		aBranch = _createElement(newdata, father);
-		std::cout << aBranch->data << " red is " << aBranch->isRed << std::endl; //just for check
 		_balancer(aBranch);
 	}
 	else if (aBranch->data == newdata)
 		std::cout << "value for the key will be renovated" << std::endl;
 	else if (aBranch->data > newdata)
 	{
-		std::cout << "MAKING LEFT BRANCH" << std::endl;
 		_addElement(newdata, aBranch->left, aBranch);
 	}
 	else
 	{
-		std::cout << "MAKING RIGHT BRANCH" << std::endl;
 		_addElement(newdata, aBranch->right, aBranch);
 	}
-
 
 }
 
@@ -50,8 +46,6 @@ Branch*	Tree::_createElement(int newdata, Branch*& father)
 		newbranch->isRed = false; // root is always black
 	return newbranch;
 }
-
-
 
 void	Tree::_balancer(Branch*& aBranch)
 {
@@ -105,11 +99,9 @@ void		Tree::_blackUncleFatherGrandDifSides(Branch* son, Branch* father, Branch* 
 
 void		Tree::_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch* grand)
 {
-	std::cout << "son is " << son->data << " father is " << father->data << " grand is " << grand->data << std::endl; //for debug
 	std::string newside = _sideChecker(son, father);
-
 	Branch*	tempRoot = grand->father;
-	std::cout << "tempRoot data is " << grand->father->data << std::endl;
+	std::string newsideforlast = _sideChecker(grand, tempRoot);
 	Branch*	temp;
 	if (newside == "left")
 	{
@@ -123,23 +115,17 @@ void		Tree::_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch*
 		father->left = grand;
 		grand->right = temp;
 	}
-
 	grand->father = father;
-
-
 	_rePainting(father, grand);
 	father->father = tempRoot;
-	if (newside == "left")
+	if (!tempRoot)
+	{
+		_branch = father;
+	}
+	else if (newsideforlast == "left")
 		tempRoot->left = father;
 	else
 		tempRoot->right = father;
-
-//	if (tempRoot == _branch)
-//	{
-//		std::cout << "root data is " << _branch->data << std::endl;
-//		_branch = father->father;
-//	}
-
 }
 
 void		Tree::_rePainting(Branch*& father, Branch*& grand)
@@ -158,9 +144,6 @@ void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::stri
 	_sonChanger(grand, son, newside);
 	_sonsReplacer(son, father);
 	_sonChanger(son, father, newside);
-
-
-
 }
 
 void		Tree::_sonsReplacer(Branch*& fromWhom, Branch*& toWhom)
