@@ -34,7 +34,7 @@ private:
 	bool		_isFatherandGrandontheSameSide(Branch*& aBranch);
 	std::string _sideChecker(Branch*& son, Branch*& father);
 	void		_blackUncleFatherGrandDifSides(Branch* son, Branch* father, Branch* grand);
-	void	_blackUnclefatherGrandsame(Branch*& aBranch);
+	void		_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch* grand);
 	void		_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side);
 	void		_sonsReplacer(Branch*& fromWhom, Branch*& toWhom);
 	void		_sonChanger(Branch*& older, Branch*& younger, std::string side);

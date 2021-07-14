@@ -66,12 +66,11 @@ void	Tree::_balancer(Branch*& aBranch)
 			_redUncle(aBranch->father, uncle);
 		else if ((!uncle || (uncle && !uncle->isRed)) && !_isFatherandGrandontheSameSide(aBranch)) //condition for black uncle and farther and grandfather are on different sides
 			_blackUncleFatherGrandDifSides(aBranch, aBranch->father, aBranch->father->father);
-		//else //condition for black uncle and farther and grandfather are on the same side
-		//	_blackUnclefatherGrandsame();
+		else if ((!uncle || (uncle && !uncle->isRed)) && _isFatherandGrandontheSameSide(aBranch))//condition for black uncle and farther and grandfather are on the same side
+			_blackUncleFatherGrandSameSides(aBranch, aBranch->father, aBranch->father->father);
 	}
 	else if (!aBranch->father)// check further
 		aBranch->isRed = false;
-
 }
 
 void	Tree::_redUncle(Branch*& father, Branch* uncle)
@@ -100,7 +99,13 @@ void		Tree::_blackUncleFatherGrandDifSides(Branch* son, Branch* father, Branch* 
 {
 	//1. small rotation
 	_smallRotor(son, father, grand, _sideChecker(son, father));
-	//2. samesides
+	//2. samesides = big rotor
+	_blackUncleFatherGrandSameSides(father, son, grand);
+}
+
+void		Tree::_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch* grand)
+{
+	std::cout << "son is " << son->data << " father is " << father->data << " grand is " << grand->data << std::endl;
 }
 
 void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side)
