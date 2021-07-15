@@ -19,37 +19,48 @@ void 	Tree::myswap(int* a, int* b)
 
 Branch*	Tree::findElement(int data, Branch*& branch)
 {
-	Branch*	found = nullptr;
 	if (branch)
 	{
 		if (data == branch->data)
-			found = branch;
+		{
+
+			//std::cout << branch->data << " AND " << branch->left->data << std::endl;
+			return branch;
+		}
+
 		else if (data < branch->data)
-			found = findElement(data, branch->left);
+			return findElement(data, branch->left);
 		else
-			found = findElement(data, branch->right);
+			return findElement(data, branch->right);
 	}
 	else
-		found = nullptr;
-	return found;
+		return nullptr;
 }
 
 void 	Tree::deleteElement(int data)
 {
+	std::cout << "I'm finding " << data << std::endl;
 	Branch*	toDel = findElement(data, _branch);
 	if (!toDel)
 	{
 		std::cout << "not found" << std::endl;//for debug
 		return;
 	}
-	std::cout << toDel->data << " should be deleted" << std::endl;//for debug
 	if (toDel->isRed && !toDel->left && !toDel->right) //R0 case
 		_deleteR0case(toDel);
 	else if (!toDel->isRed && !toDel->left && !toDel->right) // B0 case, should be made
+	{
 		_deleteB0case(toDel);
-	else if (toDel->left && toDel->right) // 2 chiled case
+	}
+
+	else if (toDel->left && toDel->right) // 2 children case
+	{
+		std::cout << "before " << toDel->data << std::endl;
 		_delete2case(toDel);
-	else if ((toDel->left && !toDel->right) || (!toDel->left && toDel->right))
+		std::cout << "after " << toDel->data << std::endl;
+	}
+
+	else if ((toDel->left && !toDel->right) || (!toDel->left && toDel->right)) // 1 child
 		_delete1case(toDel);
 
 }
