@@ -9,6 +9,14 @@ Tree::Tree()
 Tree::~Tree()
 {}
 
+void 	Tree::myswap(int* a, int* b)
+{
+	int		c;
+	c = *a;
+	*a = *b;
+	*b = c;
+}
+
 Branch*	Tree::findElement(int data, Branch*& branch)
 {
 	Branch*	found = nullptr;
@@ -24,6 +32,24 @@ Branch*	Tree::findElement(int data, Branch*& branch)
 	else
 		found = nullptr;
 	return found;
+}
+
+void 	Tree::deleteElement(int data)
+{
+	Branch*	toDel = findElement(data, _branch);
+	if (!toDel)
+	{
+		std::cout << "not found" << std::endl;//for debug
+		return;
+	}
+	std::cout << toDel->data << " should be deleted" << std::endl;//for debug
+	if (toDel->isRed && !toDel->left && !toDel->right) //R0 case
+		_deleteR0case(toDel);
+	else if (!toDel->isRed && !toDel->left && !toDel->right) // B0 case, should be made
+		_deleteB0case(toDel);
+	else if (toDel->isRed && toDel->left && toDel->right)
+		_deleteR2case(toDel);
+
 }
 
 //----------insert mechanic-------------------------------------------
@@ -191,26 +217,10 @@ Branch*	Tree::getTree() const
 
 //-----end of insert mechanic--------------------------------------------------------
 
-void 	Tree::deleteElement(int data)
-{
-	Branch*	toDel = findElement(data, _branch);
-	if (toDel)
-	{
-		std::cout << toDel->data << " should be deleted" << std::endl;//for debug
-		if (!toDel->left && !toDel->right)
-			_deleteLastNode(toDel);
-	}
 
-	else
-	{
-		std::cout << "not found" << std::endl;//for debug
-		return;
-	}
-
-}
 
 //-----internal mechanic for deleteElement()------------------------------------------
-void 	Tree::_deleteLastNode(Branch*& toDel)
+void 	Tree::_deleteR0case(Branch*& toDel)
 {
 	Branch*	father = toDel->father;
 	if (father->left == toDel)
@@ -218,4 +228,23 @@ void 	Tree::_deleteLastNode(Branch*& toDel)
 	else
 		father->right = nullptr;
 	delete(toDel);
+}
+
+void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
+{
+	std::cout << "this method isn't made yet" << toDel->data << std::endl;
+}
+
+void	Tree::_deleteR2case(Branch*& toDel)
+{
+	Branch*	replacer = _findReplacer(toDel->right);// finding minRight
+	myswap(&(toDel->data), &(replacer->data));
+	deleteElement(replacer->data); // finished here
+}
+
+Branch*	Tree::_findReplacer(Branch*& node)
+{
+	if (!node->left)
+		return node;
+	return _findReplacer(node->left);
 }

@@ -16,6 +16,7 @@ class Tree {
 public:
 	Tree();
 	~Tree();
+	void 		myswap(int* a, int* b); // put to utilities?
 	void 		insertElement(int newdata);
 	void 		deleteElement(int data);
 	Branch*		findElement(int data, Branch*& branch);
@@ -45,7 +46,10 @@ private:
 	//-----end of inserting mechanic------------------
 
 	//-----internal mechanic for deleteElement()------
-	void 		_deleteLastNode(Branch*& toDel);
+	void 		_deleteR0case(Branch*& toDel);
+	void 		_deleteB0case(Branch*& toDel); // not made
+	void		_deleteR2case(Branch*& toDel);
+	Branch*		_findReplacer(Branch*& node);
 };
 
 
