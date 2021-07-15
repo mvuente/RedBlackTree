@@ -9,6 +9,26 @@ Tree::Tree()
 Tree::~Tree()
 {}
 
+Branch*	Tree::findElement(int data, Branch*& branch)
+{
+	Branch*	found = nullptr;
+	if (branch)
+	{
+		std::cout << branch->data << std::endl;
+		if (data == branch->data)
+			found = branch;
+		else if (data < branch->data)
+			found = findElement(data, branch->left);
+		else
+			found = findElement(data, branch->right);
+	}
+	else
+		found = nullptr;
+	return found;
+}
+
+//----------insert mechanic-------------------------------------------
+
 void 	Tree::insertElement(int newdata)
 {
 	_addElement(newdata, _branch, nullptr);
@@ -168,5 +188,16 @@ Branch*	Tree::getTree() const
 	return _branch;
 }
 
-
 //---- end of fro debug----
+
+//-----end of insert mechanic--------------------------------------------------------
+
+void 	Tree::deleteElement(int data)
+{
+	Branch*	toDel = findElement(data, _branch);
+	if (toDel)
+		std::cout << toDel->data << " should be deleted" << std::endl;
+	else
+		std::cout << "not found" << std::endl;
+
+}

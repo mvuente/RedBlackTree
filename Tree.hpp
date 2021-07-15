@@ -17,6 +17,8 @@ public:
 	Tree();
 	~Tree();
 	void 		insertElement(int newdata);
+	void 		deleteElement(int data);
+	Branch*		findElement(int data, Branch*& branch);
 
 	//----debug functions ---------
 	Branch*		getTree() const;
