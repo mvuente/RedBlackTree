@@ -14,7 +14,6 @@ Branch*	Tree::findElement(int data, Branch*& branch)
 	Branch*	found = nullptr;
 	if (branch)
 	{
-		std::cout << branch->data << std::endl;
 		if (data == branch->data)
 			found = branch;
 		else if (data < branch->data)
@@ -196,8 +195,27 @@ void 	Tree::deleteElement(int data)
 {
 	Branch*	toDel = findElement(data, _branch);
 	if (toDel)
-		std::cout << toDel->data << " should be deleted" << std::endl;
-	else
-		std::cout << "not found" << std::endl;
+	{
+		std::cout << toDel->data << " should be deleted" << std::endl;//for debug
+		if (!toDel->left && !toDel->right)
+			_deleteLastNode(toDel);
+	}
 
+	else
+	{
+		std::cout << "not found" << std::endl;//for debug
+		return;
+	}
+
+}
+
+//-----internal mechanic for deleteElement()------------------------------------------
+void 	Tree::_deleteLastNode(Branch*& toDel)
+{
+	Branch*	father = toDel->father;
+	if (father->left == toDel)
+		father->left = nullptr;
+	else
+		father->right = nullptr;
+	delete(toDel);
 }

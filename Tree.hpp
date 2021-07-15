@@ -43,6 +43,9 @@ private:
 	void		_sonChanger(Branch*& older, Branch*& younger, std::string side);
 			//-----end of balancer mechanic------------------
 	//-----end of inserting mechanic------------------
+
+	//-----internal mechanic for deleteElement()------
+	void 		_deleteLastNode(Branch*& toDel);
 };
 
 
