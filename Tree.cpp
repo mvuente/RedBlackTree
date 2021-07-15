@@ -47,8 +47,10 @@ void 	Tree::deleteElement(int data)
 		_deleteR0case(toDel);
 	else if (!toDel->isRed && !toDel->left && !toDel->right) // B0 case, should be made
 		_deleteB0case(toDel);
-	else if (toDel->isRed && toDel->left && toDel->right)
-		_deleteR2case(toDel);
+	else if (toDel->left && toDel->right) // 2 chiled case
+		_delete2case(toDel);
+	else if ((toDel->left && !toDel->right) || (!toDel->left && toDel->right))
+		_delete1case(toDel);
 
 }
 
@@ -235,11 +237,22 @@ void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
 	std::cout << "this method isn't made yet" << toDel->data << std::endl;
 }
 
-void	Tree::_deleteR2case(Branch*& toDel)
+void	Tree::_delete2case(Branch*& toDel)
 {
 	Branch*	replacer = _findReplacer(toDel->right);// finding minRight
 	myswap(&(toDel->data), &(replacer->data));
-	deleteElement(replacer->data); // finished here
+	deleteElement(replacer->data);
+}
+
+void	Tree::_delete1case(Branch*& toDel)
+{
+	Branch*	replacer;
+	if (toDel->right)
+		replacer = toDel->right;
+	else
+		replacer = toDel->left;
+	myswap(&(toDel->data), &(replacer->data));
+	deleteElement(replacer->data);
 }
 
 Branch*	Tree::_findReplacer(Branch*& node)

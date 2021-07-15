@@ -48,7 +48,8 @@ private:
 	//-----internal mechanic for deleteElement()------
 	void 		_deleteR0case(Branch*& toDel);
 	void 		_deleteB0case(Branch*& toDel); // not made
-	void		_deleteR2case(Branch*& toDel);
+	void		_delete2case(Branch*& toDel);
+	void		_delete1case(Branch*& toDel);
 	Branch*		_findReplacer(Branch*& node);
 };
 
