@@ -4,6 +4,7 @@
 Tree::Tree()
 {
 	_branch = nullptr;
+	_sideDeleted = "";
 }
 
 Tree::~Tree()
@@ -277,23 +278,73 @@ void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
 	std::cout << "this method isn't made yet" << toDel->data << std::endl;
 	Branch*	parentBeBalanced = toDel->father;
 	if (parentBeBalanced->left == toDel)
+	{
+		_sideDeleted = "left";
 		parentBeBalanced->left = nullptr;
+	}
+
 	else
+	{
+		_sideDeleted = "left";
 		parentBeBalanced->right = nullptr;
+	}
+
 	delete(toDel);
 	_balancerAfterDelete(parentBeBalanced);
 }
 
-void 	Tree::_balancerAfterDelete(Branch*& node)
+void 		Tree::_balancerAfterDelete(Branch*& node)
 {
 	Branch*	son = _oppositeSon(node);
 	if (node->isRed && !son->isRed && son->left && !son->left->isRed && son->right && !son->right->isRed)
 		_rePainting(son, node);
+	else if (node->isRed && son->isRed && son->left && son->left->isRed)
+		_smallRotDel(node);
 }
 
-Branch*	Tree::_oppositeSon(Branch*& node)
+Branch*		Tree::_oppositeSon(Branch*& node)
 {
 	if (node && node->left)
 		return node->left;
 	return node->right;
+}
+
+Branch*		Tree::_getSon(Branch* node, std::string side)
+{
+	if (side == "left")
+		return node->left;
+	return node->right;
+}
+
+std::string Tree::_oppositeSide(std::string side)
+{
+	if (side == "left")
+		return "right";
+	return "left";
+}
+
+void		Tree::_smallRotDel(Branch*& node)
+{
+
+	std::string workingside = _oppositeSide(_sideDeleted);
+	Branch*		son = _getSon(node, workingside);
+	Branch*		younger = _getSon(_getSon(node, workingside), workingside);
+	_sonChanger(node, younger, workingside);
+	younger->isRed = false;
+	if (son->left->data == younger->data)
+	{
+		son->left = son->right;
+		son->right = nullptr;
+	}
+	else
+	{
+		son->right = son->left;
+		son->left = nullptr;
+	}
+	if (_sideDeleted == "right")
+		node->right = son;
+	else
+		node->left = son;
+	myswap(&(node->data), &(son->data));
+
 }

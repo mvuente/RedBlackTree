@@ -26,7 +26,8 @@ public:
 	//----end of debug functions---
 
 private:
-	Branch*	_branch;
+	Branch*		_branch;
+	std::string _sideDeleted;
 
 	//-----internal mechanic for insertElement()------
 	Branch*		_createElement(int newdata, Branch*& father);
@@ -53,6 +54,9 @@ private:
 	Branch*		_findReplacer(Branch*& node);
 	void 		_balancerAfterDelete(Branch*& node);
 	Branch*		_oppositeSon(Branch*& node);
+	void		_smallRotDel(Branch*& node);
+	std::string _oppositeSide(std::string side);
+	Branch*		_getSon(Branch* node, std::string side);
 };
 
 
