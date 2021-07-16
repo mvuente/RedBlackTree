@@ -18,8 +18,8 @@ public:
 	~Tree();
 	void 		myswap(int* a, int* b); // put to utilities?
 	void 		insertElement(int newdata);
-	void 		deleteElement(int data);
-	Branch*		findElement(int data, Branch*& branch);
+	void 		deleteElement(int data1, int data2);
+	Branch*		findElement(int data, int dataifchanged, Branch*& branch);
 
 	//----debug functions ---------
 	Branch*		getTree() const;

@@ -17,30 +17,35 @@ void 	Tree::myswap(int* a, int* b)
 	*b = c;
 }
 
-Branch*	Tree::findElement(int data, Branch*& branch)
+Branch*	Tree::findElement(int data, int dataifchanged, Branch*& branch)
 {
-	if (branch)
+	Branch*	tempNode = branch;
+	int 	datatofind = data;
+	if (data != dataifchanged)
+		datatofind = dataifchanged;
+	while (tempNode)
 	{
-		if (data == branch->data)
+		if (datatofind == tempNode->data)
 		{
-
 			//std::cout << branch->data << " AND " << branch->left->data << std::endl;
-			return branch;
-		}
+			if (data == dataifchanged)
+			return tempNode;
+			if (tempNode->left->data == data)
+				return tempNode->left;
+			return tempNode->right;
 
-		else if (data < branch->data)
-			return findElement(data, branch->left);
+		}
+		else if (datatofind < tempNode->data)
+			tempNode = tempNode->left;
 		else
-			return findElement(data, branch->right);
+			tempNode = tempNode->right;
 	}
-	else
 		return nullptr;
 }
 
-void 	Tree::deleteElement(int data)
+void 	Tree::deleteElement(int data1, int data2)
 {
-	std::cout << "I'm finding " << data << std::endl;
-	Branch*	toDel = findElement(data, _branch);
+	Branch*	toDel = findElement(data1, data2, _branch);
 	if (!toDel)
 	{
 		std::cout << "not found" << std::endl;//for debug
@@ -55,9 +60,7 @@ void 	Tree::deleteElement(int data)
 
 	else if (toDel->left && toDel->right) // 2 children case
 	{
-		std::cout << "before " << toDel->data << std::endl;
 		_delete2case(toDel);
-		std::cout << "after " << toDel->data << std::endl;
 	}
 
 	else if ((toDel->left && !toDel->right) || (!toDel->left && toDel->right)) // 1 child
@@ -250,9 +253,9 @@ void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
 
 void	Tree::_delete2case(Branch*& toDel)
 {
-	Branch*	replacer = _findReplacer(toDel->right);// finding minRight
-	myswap(&(toDel->data), &(replacer->data));
-	deleteElement(replacer->data);
+	int 	delval = toDel->data;
+	myswap(&(toDel->data), &(_findReplacer(toDel->right)->data));
+	deleteElement(delval, toDel->data);
 }
 
 void	Tree::_delete1case(Branch*& toDel)
@@ -263,12 +266,13 @@ void	Tree::_delete1case(Branch*& toDel)
 	else
 		replacer = toDel->left;
 	myswap(&(toDel->data), &(replacer->data));
-	deleteElement(replacer->data);
+	deleteElement(replacer->data, toDel->data);
 }
 
 Branch*	Tree::_findReplacer(Branch*& node)
 {
-	if (!node->left)
-		return node;
-	return _findReplacer(node->left);
+	while (node->left)
+		node = node->left;
+	//std::cout << &node << std::endl;
+	return node;
 }
