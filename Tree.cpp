@@ -189,10 +189,10 @@ void		Tree::_blackUncleFatherGrandSameSides(Branch* son, Branch* father, Branch*
 		tempRoot->right = father;
 }
 
-void		Tree::_rePainting(Branch*& father, Branch*& grand)
+void		Tree::_rePainting(Branch*& younger, Branch*& older)
 {
-	father->isRed = !father->isRed;
-	grand->isRed = !grand->isRed;
+	younger->isRed = !younger->isRed;
+	older->isRed = !older->isRed;
 }
 
 void		Tree::_smallRotor(Branch*& son, Branch*& father, Branch*& grand, std::string side)
@@ -246,11 +246,6 @@ void 	Tree::_deleteR0case(Branch*& toDel)
 	delete(toDel);
 }
 
-void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
-{
-	std::cout << "this method isn't made yet" << toDel->data << std::endl;
-}
-
 void	Tree::_delete2case(Branch*& toDel)
 {
 	int 	delval = toDel->data;
@@ -275,4 +270,30 @@ Branch*	Tree::_findReplacer(Branch*& node)
 		node = node->left;
 	//std::cout << &node << std::endl;
 	return node;
+}
+
+void 	Tree::_deleteB0case(Branch*& toDel) // need to be made
+{
+	std::cout << "this method isn't made yet" << toDel->data << std::endl;
+	Branch*	parentBeBalanced = toDel->father;
+	if (parentBeBalanced->left == toDel)
+		parentBeBalanced->left = nullptr;
+	else
+		parentBeBalanced->right = nullptr;
+	delete(toDel);
+	_balancerAfterDelete(parentBeBalanced);
+}
+
+void 	Tree::_balancerAfterDelete(Branch*& node)
+{
+	Branch*	son = _oppositeSon(node);
+	if (node->isRed && !son->isRed && son->left && !son->left->isRed && son->right && !son->right->isRed)
+		_rePainting(son, node);
+}
+
+Branch*	Tree::_oppositeSon(Branch*& node)
+{
+	if (node && node->left)
+		return node->left;
+	return node->right;
 }

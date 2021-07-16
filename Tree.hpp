@@ -51,6 +51,8 @@ private:
 	void		_delete2case(Branch*& toDel);
 	void		_delete1case(Branch*& toDel);
 	Branch*		_findReplacer(Branch*& node);
+	void 		_balancerAfterDelete(Branch*& node);
+	Branch*		_oppositeSon(Branch*& node);
 };
 
 
